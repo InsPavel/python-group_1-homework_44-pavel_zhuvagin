@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block menu %}
+    <li class="nav-item">
+        <a href="#" class="nav-link">Список заказов</a>
+    </li>
+{% endblock %}
+{% block content %}
+    {% for food in food_list %}
+        <p><a href="#">{{ food.name }}</a></p>
+    {% endfor %}
+{% endblock %}

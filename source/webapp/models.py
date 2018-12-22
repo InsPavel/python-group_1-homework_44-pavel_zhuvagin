@@ -11,6 +11,9 @@ class Food(models.Model):
     photo = models.ImageField(verbose_name='Фотография')
     price = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Цена')
 
+    def __str__(self):
+        return '%s. %s' % (self.pk, self.name)
+
 class Order(models.Model):
     STATUS_NEW = 'new'
     STATUS_PREPARING = 'preparing'
@@ -33,7 +36,11 @@ class Order(models.Model):
     operator = models.ForeignKey(User, null=True, blank=True, related_name='orders', verbose_name='Оператор', on_delete=models.PROTECT)
     courier = models.ForeignKey(User, null=True, blank=True, related_name='delivered', verbose_name='Курьер', on_delete=models.PROTECT)
 
+    def __str__(self):
+        return '%s. Заказ на адрес: %s. Телефон: %s' % (self.pk, self.delivery_adress, self.contact_phone)
+
 class OrderFoods(models.Model):
     order = models.ForeignKey(Order, related_name='foods', on_delete=models.PROTECT, verbose_name='Заказ')
     food = models.ForeignKey(Food, related_name='+', on_delete=models.PROTECT, verbose_name='Блюдо')
     amount = models.IntegerField(verbose_name='Количество')
+
