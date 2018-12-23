@@ -1,8 +1,8 @@
 from django.views.generic import DetailView, CreateView, ListView, UpdateView, View, DeleteView
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from webapp.models import Food, Order, OrderFoods
-from webapp.forms import FoodForm, OrderForm, OrderFoodForm
+from webapp.forms import FoodForm, OrderForm, OrderFoodForm, UpdateFoodForm
 
 
 class OrderListView(ListView):
@@ -53,3 +53,10 @@ class FoodCreateView(CreateView):
 class FoodListView(ListView):
     model = Food
     template_name = 'food_list.html'
+
+class FoodUpdateView(UpdateView):
+    model = Food
+    form_class = UpdateFoodForm
+    template_name = 'food_update.html'
+    success_url = reverse_lazy('food_list')
+
