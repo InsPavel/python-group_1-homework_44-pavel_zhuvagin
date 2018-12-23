@@ -17,12 +17,16 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
-from webapp.views import OrderListView, OrderDetailList
+from webapp.views import OrderListView, OrderDetailList, OrderCreateView, FoodCreateView, FoodDetailView, OrderFoodCreateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', OrderListView.as_view(), name='order'),
-    path('order/<int:pk>', OrderDetailList.as_view(), name='order_detail')
+    path('order/<int:pk>', OrderDetailList.as_view(), name='order_detail'),
+    path('order/create', OrderCreateView.as_view(), name='order_create'),
+    path('food/create', FoodCreateView.as_view(), name='food_create'),
+    path('food/<int:pk>', FoodDetailView.as_view(), name='food_detail'),
+    path('order/<int:pk>/food/create', OrderFoodCreateView.as_view(), name='order_food_create')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

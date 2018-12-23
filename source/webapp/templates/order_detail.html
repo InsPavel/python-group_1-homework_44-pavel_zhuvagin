@@ -3,11 +3,12 @@
 
 {% endblock %}
 {% block content %}
+    <a href="{% url 'order_food_create' orderfoods.pk%}">Добавить блюдо в заказ</a>
     <p>Контактное имя: {{ orderfoods.order.contact_name }}</p>
     <p>Контактный телефон: {{ orderfoods.order.contact_phone }}</p>
     <p>Адрес доставки: {{ orderfoods.order.delivery_adress }}</p>
     <p>Статус: {{ orderfoods.order.status }}</p>
     <p>Оператор: {{ orderfoods.order.operator }}</p>
     <p>Курьер: {{ orderfoods.order.courier }}</p>
-    <p>Блюдо: {{ orderfoods.food.name }} - {{ orderfoods.amount }}шт.</p>
+
 {% endblock %}
