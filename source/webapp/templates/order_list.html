@@ -6,6 +6,9 @@
     <li class="nav-item">
         <a href="{% url 'food_create' %}" class="nav-link">Добавить блюдо</a>
     </li>
+    <li class="nav-item">
+        <a href="{% url 'food_list' %}" class="nav-link">Список блюд</a>
+    </li>
 {% endblock %}
 {% block content %}
     <h1><a href="{% url 'order_create' %}">Добавить заказ</a></h1>

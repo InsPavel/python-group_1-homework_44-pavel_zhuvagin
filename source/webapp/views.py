@@ -49,3 +49,7 @@ class FoodCreateView(CreateView):
 
     def get_success_url(self):
         return reverse('food_detail', kwargs={'pk': self.object.pk})
+
+class FoodListView(ListView):
+    model = Food
+    template_name = 'food_list.html'
