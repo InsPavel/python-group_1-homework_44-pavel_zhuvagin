@@ -1,6 +1,12 @@
-from webapp.models import Food
-from django.views.generic import ListView
+from webapp.models import Order, OrderFoods
+from django.views.generic import ListView, DetailView
 
-class FoodListView(ListView):
-    model = Food
-    template_name = 'foods.html'
+class OrderListView(ListView):
+    model = Order
+    template_name = 'order_list.html'
+
+class OrderDetailList(DetailView):
+    model = OrderFoods
+    template_name = 'order_detail.html'
+
+

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block menu %}
+    <li class="nav-item">
+        <a href="#" class="nav-link">Список пользователей</a>
+    </li>
+{% endblock %}
+{% block content %}
+    <h1>Список заказов</h1>
+    {% for order in order_list %}
+        <p><a href="{% url 'order_detail' order.pk %}">Адрес: {{ order.delivery_adress }}. Телефон: {{ order.contact_phone }}</a></p>
+    {% endfor %}
+{% endblock %}
