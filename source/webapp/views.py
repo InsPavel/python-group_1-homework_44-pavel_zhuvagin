@@ -2,7 +2,7 @@ from django.views.generic import DetailView, CreateView, ListView, UpdateView, V
 from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from webapp.models import Food, Order, OrderFoods
-from webapp.forms import FoodForm, OrderForm, OrderFoodForm, UpdateFoodForm
+from webapp.forms import FoodForm, OrderForm, OrderFoodForm, UpdateFoodForm, UpdateOrderForm
 
 
 class OrderListView(ListView):
@@ -66,4 +66,21 @@ class FoodDeleteView(DeleteView):
     model = Food
     template_name = 'food_delete.html'
     success_url = reverse_lazy('food_list')
+
+class OrderUpdateView(UpdateView):
+    model = Order
+    form_class = UpdateOrderForm
+    template_name = 'order_update.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['order'] = Order.objects.get(pk=self.kwargs.get('pk'))
+        return context
+
+    def form_valid(self, form):
+        form.instance.order = Order.objects.get(pk=self.kwargs.get('pk'))
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('order_detail', kwargs={'pk': self.object.pk})
 

@@ -23,3 +23,8 @@ class UpdateFoodForm(forms.ModelForm):
     class Meta:
         model = Food
         exclude = []
+
+class UpdateOrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        exclude = []
