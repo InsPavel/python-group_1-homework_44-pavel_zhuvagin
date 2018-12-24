@@ -41,6 +41,6 @@ class Order(models.Model):
 
 class OrderFoods(models.Model):
     order = models.ForeignKey(Order, related_name='foods', on_delete=models.PROTECT, verbose_name='Заказ')
-    food = models.ForeignKey(Food, related_name='+', on_delete=models.PROTECT, verbose_name='Блюдо')
+    food = models.ForeignKey(Food, related_name='+', on_delete=models.CASCADE, verbose_name='Блюдо')
     amount = models.IntegerField(verbose_name='Количество')
 

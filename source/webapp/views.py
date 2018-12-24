@@ -58,5 +58,12 @@ class FoodUpdateView(UpdateView):
     model = Food
     form_class = UpdateFoodForm
     template_name = 'food_update.html'
+
+    def get_success_url(self):
+        return reverse('food_detail', kwargs={'pk': self.object.pk})
+
+class FoodDeleteView(DeleteView):
+    model = Food
+    template_name = 'food_delete.html'
     success_url = reverse_lazy('food_list')
 
