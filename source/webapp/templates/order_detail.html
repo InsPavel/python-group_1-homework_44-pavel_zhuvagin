@@ -3,12 +3,12 @@
 
 {% endblock %}
 {% block content %}
-    <a href="{% url 'order_food_create' orderfoods.pk%}">Добавить блюдо в заказ</a>
-    <p>Контактное имя: {{ orderfoods.order.contact_name }}</p>
-    <p>Контактный телефон: {{ orderfoods.order.contact_phone }}</p>
-    <p>Адрес доставки: {{ orderfoods.order.delivery_adress }}</p>
-    <p>Статус: {{ orderfoods.order.status }}</p>
-    <p>Оператор: {{ orderfoods.order.operator }}</p>
-    <p>Курьер: {{ orderfoods.order.courier }}</p>
+    <a href="{% url 'order_food_create' order.pk%}">Добавить блюдо в заказ</a>
+    <p>Контактное имя: {{ order.contact_name }}</p>
+    <p>Контактный телефон: {{ order.contact_phone }}</p>
+    <p>Адрес доставки: {{ order.delivery_adress }}</p>
+    <p>Статус: {{ order.status }}</p>
+    <p>Оператор: {{ order.operator }}</p>
+    <p>Курьер: {{ order.courier }}</p>
 
 {% endblock %}

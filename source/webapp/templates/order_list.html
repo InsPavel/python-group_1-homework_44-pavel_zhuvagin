@@ -11,9 +11,9 @@
     </li>
 {% endblock %}
 {% block content %}
-    <h1><a href="{% url 'order_create' %}">Добавить заказ</a></h1>
     <h1>Список заказов</h1>
     {% for order in order_list %}
         <p><a href="{% url 'order_detail' order.pk %}">Адрес: {{ order.delivery_adress }}. Телефон: {{ order.contact_phone }}</a><a href="{% url 'order_update' order.pk %}"> Изменить</a></p>
     {% endfor %}
+    <h4><a href="{% url 'order_create' %}">Добавить заказ</a></h4>
 {% endblock %}

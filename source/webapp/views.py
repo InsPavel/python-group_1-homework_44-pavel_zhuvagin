@@ -10,7 +10,7 @@ class OrderListView(ListView):
     template_name = 'order_list.html'
 
 class OrderDetailList(DetailView):
-    model = OrderFoods
+    model = Order
     template_name = 'order_detail.html'
 
 class OrderCreateView(CreateView):
@@ -83,4 +83,7 @@ class OrderUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse('order_detail', kwargs={'pk': self.object.pk})
+
+
+
 
