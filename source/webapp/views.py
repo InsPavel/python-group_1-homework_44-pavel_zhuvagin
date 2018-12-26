@@ -1,9 +1,9 @@
 from django.views.generic import DetailView, CreateView, ListView, UpdateView, View, DeleteView
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 from django.http import HttpResponseRedirect
 from webapp.models import Food, Order, OrderFoods
 from webapp.forms import FoodForm, OrderForm, OrderFoodForm, UpdateFoodForm, UpdateOrderForm
-
+from django.shortcuts import render, redirect
 
 class OrderListView(ListView):
     model = Order
@@ -26,6 +26,9 @@ class OrderFoodCreateView(CreateView):
     form_class = OrderFoodForm
     template_name = 'order_food_create.html'
 
+    def get_success_url(self):
+        return reverse('order_detail', kwargs={'pk': self.object.order.pk})
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['order'] = Order.objects.get(pk=self.kwargs.get('pk'))
@@ -34,9 +37,6 @@ class OrderFoodCreateView(CreateView):
     def form_valid(self, form):
         form.instance.order = Order.objects.get(pk=self.kwargs.get('pk'))
         return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse('order_detail', kwargs={'pk': self.object.order.pk})
 
 class FoodDetailView(DetailView):
     model = Food
@@ -62,10 +62,18 @@ class FoodUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('food_detail', kwargs={'pk': self.object.pk})
 
-class FoodDeleteView(DeleteView):
-    model = Food
+class OrderFoodsDeleteView(DeleteView):
+    model = OrderFoods
+    form_class = OrderFoodForm
     template_name = 'food_delete.html'
-    success_url = reverse_lazy('food_list')
+
+    def get_success_url(self):
+        return reverse('order_detail', kwargs={'pk': self.object.order.pk})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['order'] = Order.objects.get(pk=self.kwargs.get('pk'))
+        return context
 
 class OrderUpdateView(UpdateView):
     model = Order
@@ -83,6 +91,28 @@ class OrderUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse('order_detail', kwargs={'pk': self.object.pk})
+
+
+def edit(request, pk):
+    order = Order.objects.get(pk=pk)
+    if order.status == 'preparing':
+        order.status = "on_way"
+    elif order.status == 'on_way':
+        order.status = 'delivered'
+    order.save()
+
+    return redirect('order_detail', order.pk)
+
+def cancel(request, pk):
+    order = Order.objects.get(pk=pk)
+    order.status = 'canceled'
+    order.save()
+    return redirect('order_detail', order.pk)
+
+
+
+
+
 
 
 

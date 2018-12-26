@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from webapp import views
 from django.conf.urls.static import static
 from django.conf import settings
-from webapp.views import OrderListView, OrderDetailList, OrderCreateView, FoodCreateView, FoodDetailView, OrderFoodCreateView, FoodListView, FoodUpdateView, FoodDeleteView, OrderUpdateView
+from webapp.views import OrderListView, OrderDetailList, OrderCreateView, FoodCreateView, \
+    FoodDetailView, OrderFoodCreateView, FoodListView, FoodUpdateView, \
+    OrderFoodsDeleteView, OrderUpdateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,8 +32,10 @@ urlpatterns = [
     path('order/<int:pk>/food/create', OrderFoodCreateView.as_view(), name='order_food_create'),
     path('food', FoodListView.as_view(), name='food_list'),
     path('food/<int:pk>/update', FoodUpdateView.as_view(), name='food_update'),
-    path('food/<int:pk>/delete', FoodDeleteView.as_view(), name='food_delete'),
+    path('order/<int:pk>/food/delete', OrderFoodsDeleteView.as_view(), name='food_delete'),
     path('order/<int:pk>/update', OrderUpdateView.as_view(), name='order_update'),
+    path('edit/<int:pk>/', views.edit, name='order_deliver'),
+    path('cancel/<int:pk>/', views.cancel, name='order_cancel'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

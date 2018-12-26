@@ -10,5 +10,8 @@
     <p>Статус: {{ order.status }}</p>
     <p>Оператор: {{ order.operator }}</p>
     <p>Курьер: {{ order.courier }}</p>
-
+    <h5>Блюдо: {{ order.foods.pk }}</h5>
+{% for food in order.foods.all %}
+    <p>{{ food.food.name }} - {{ food.amount }} шт.</p>
+{% endfor %}
 {% endblock %}
