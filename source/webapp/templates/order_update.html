@@ -5,7 +5,7 @@
         <h2>Заказ уже доставляется или доставлен</h2>
     {% else %}
         <h1>Изменение заказа</h1>
-        <form action="{% url 'order_update' order.pk %}" method="post">
+        <form action="{% url 'webapp:order_update' order.pk %}" method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="btn, btn-primary">Сохранить</button>

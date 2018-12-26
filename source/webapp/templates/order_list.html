@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% block menu %}
     <li class="nav-item">
-        <a href="{% url 'food_create' %}" class="nav-link">Добавить блюдо</a>
+        <a href="{% url 'webapp:food_create' %}" class="nav-link">Добавить блюдо</a>
     </li>
     <li class="nav-item">
-        <a href="{% url 'food_list' %}" class="nav-link">Список блюд</a>
+        <a href="{% url 'webapp:food_list' %}" class="nav-link">Список блюд</a>
     </li>
 {% endblock %}
 {% block content %}
     <h1>Список заказов</h1>
     {% for order in order_list %}
-        <p><a href="{% url 'order_detail' order.pk %}">Адрес: {{ order.delivery_adress }}. Телефон: {{ order.contact_phone }}</a><a href="{% url 'order_update' order.pk %}"> Изменить</a> <a href="{% url 'order_deliver' order.pk%}">{% if order.status == 'preparing' %}Взять заказ{% elif order.status == 'on_way' %}Доставить{% endif %}</a> <a href="{% url 'order_cancel' order.pk%}">Отменить</a></p>
+        <p><a href="{% url 'webapp:order_detail' order.pk %}">Адрес: {{ order.delivery_adress }}. Телефон: {{ order.contact_phone }}</a><a href="{% url 'webapp:order_update' order.pk %}"> Изменить</a> <a href="{% url 'webapp:order_deliver' order.pk%}">{% if order.status == 'preparing' %}Взять заказ{% elif order.status == 'on_way' %}Доставить{% endif %}</a> <a href="{% url 'webapp:order_cancel' order.pk%}">Отменить</a></p>
     {% endfor %}
-    <h4><a href="{% url 'order_create' %}">Добавить заказ</a></h4>
+    <h4><a href="{% url 'webapp:order_create' %}">Добавить заказ</a></h4>
 {% endblock %}
