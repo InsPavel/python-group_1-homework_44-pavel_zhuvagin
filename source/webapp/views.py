@@ -5,6 +5,7 @@ from webapp.models import Food, Order, OrderFoods, User
 from webapp.forms import FoodForm, OrderForm, OrderFoodForm, UpdateFoodForm, UpdateOrderForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.urls import reverse_lazy
 
 class OrderListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Order
@@ -73,18 +74,12 @@ class FoodUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         return reverse('webapp:food_detail', kwargs={'pk': self.object.pk})
 
 class OrderFoodsDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
-    model = OrderFoods
-    form_class = OrderFoodForm
+    model = Food
     template_name = 'food_delete.html'
+    success_url = reverse_lazy('webapp:food_list')
     permission_required = 'webapp.edit_order_food'
 
-    def get_success_url(self):
-        return reverse('webapp:order_detail', kwargs={'pk': self.object.order.pk})
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['order'] = Order.objects.get(pk=self.kwargs.get('pk'))
-        return context
 
 class OrderUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Order
