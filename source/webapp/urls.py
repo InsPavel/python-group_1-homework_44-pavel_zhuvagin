@@ -2,7 +2,7 @@ from django.urls import path
 from webapp import views
 from webapp.views import OrderListView, OrderDetailList, OrderCreateView, FoodCreateView, \
     FoodDetailView, OrderFoodCreateView, FoodListView, FoodUpdateView, \
-    OrderFoodsDeleteView, OrderUpdateView
+    OrderFoodsDeleteView, OrderUpdateView, OrderDeliverView, OrderCancelView
 
 app_name = 'webapp'
 
@@ -17,6 +17,6 @@ urlpatterns = [
     path('food/<int:pk>/update', FoodUpdateView.as_view(), name='food_update'),
     path('order/<int:pk>/food/delete', OrderFoodsDeleteView.as_view(), name='food_delete'),
     path('order/<int:pk>/update', OrderUpdateView.as_view(), name='order_update'),
-    path('edit/<int:pk>/', views.edit, name='order_deliver'),
-    path('cancel/<int:pk>/', views.cancel, name='order_cancel'),
+    path('order/<int:pk>/deliver', OrderDeliverView.as_view(), name='order_deliver'),
+    path('order/<int:pk>/cancel', OrderCancelView.as_view(), name='order_cancel'),
 ]

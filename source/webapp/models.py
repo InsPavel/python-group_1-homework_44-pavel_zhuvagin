@@ -39,6 +39,14 @@ class Order(models.Model):
     def __str__(self):
         return '%s. Заказ на адрес: %s. Телефон: %s' % (self.pk, self.delivery_adress, self.contact_phone)
 
+    class Meta:
+        permissions = [
+            ('сan_take_order_or_deliver', 'Может взять заказ или доставить'),
+            ('edit_order_food', 'Доступ для редактированния заказов и блюд'),
+        ]
+
+
+
 class OrderFoods(models.Model):
     order = models.ForeignKey(Order, related_name='foods', on_delete=models.PROTECT, verbose_name='Заказ')
     food = models.ForeignKey(Food, related_name='f', on_delete=models.CASCADE, verbose_name='Блюдо')

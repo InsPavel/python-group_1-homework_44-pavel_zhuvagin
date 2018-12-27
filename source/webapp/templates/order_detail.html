@@ -3,7 +3,9 @@
 
 {% endblock %}
 {% block content %}
-    <a href="{% url 'webapp:order_food_create' order.pk%}">Добавить блюдо в заказ</a>
+    {% if perms.webapp.edit_order_food %}
+        <a href="{% url 'webapp:order_food_create' order.pk%}">Добавить блюдо в заказ</a>
+    {% endif %}
     <p>Контактное имя: {{ order.contact_name }}</p>
     <p>Контактный телефон: {{ order.contact_phone }}</p>
     <p>Адрес доставки: {{ order.delivery_adress }}</p>
