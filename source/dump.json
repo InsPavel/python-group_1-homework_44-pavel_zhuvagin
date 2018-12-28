@@ -1,0 +1,165 @@
+[
+{
+  "model": "webapp.employee",
+  "pk": 2,
+  "fields": {
+    "name": [
+      "operator"
+    ],
+    "phone": "996123569"
+  }
+},
+{
+  "model": "webapp.employee",
+  "pk": 3,
+  "fields": {
+    "name": [
+      "courier"
+    ],
+    "phone": "996125687"
+  }
+},
+{
+  "model": "webapp.food",
+  "pk": 1,
+  "fields": {
+    "name": "\u041f\u043b\u043e\u0432",
+    "descrption": "\u0418\u043d\u0433\u0440\u0435\u0434\u0438\u0435\u043d\u0442\u044b: \u041c\u044f\u0441\u043e, \u0440\u0438\u0441, \u043b\u0443\u043a, \u043c\u043e\u0440\u043a\u043e\u0432\u043a\u0430, \u043f\u0440\u0438\u043f\u0440\u0430\u0432\u0430.",
+    "photo": "plov.jpg",
+    "price": "350.00"
+  }
+},
+{
+  "model": "webapp.food",
+  "pk": 5,
+  "fields": {
+    "name": "\u041f\u043b\u043e\u04322",
+    "descrption": "2",
+    "photo": "plov_KvDX33e.jpg",
+    "price": "420.25"
+  }
+},
+{
+  "model": "webapp.order",
+  "pk": 2,
+  "fields": {
+    "contact_phone": "+996987654",
+    "contact_name": "Jhon",
+    "delivery_adress": "\u0410\u0445\u0443\u043d\u0431\u0430\u0435\u0432\u0430 100",
+    "status": "canceled",
+    "operator": [
+      "admin"
+    ],
+    "courier": null
+  }
+},
+{
+  "model": "webapp.order",
+  "pk": 3,
+  "fields": {
+    "contact_phone": "+996125649",
+    "contact_name": "Vasya",
+    "delivery_adress": "\u043f\u0440. \u0427\u0443\u0439 90",
+    "status": "canceled",
+    "operator": [
+      "admin"
+    ],
+    "courier": null
+  }
+},
+{
+  "model": "webapp.order",
+  "pk": 4,
+  "fields": {
+    "contact_phone": "+9961548325",
+    "contact_name": "Jhon",
+    "delivery_adress": "\u043f\u0440. \u041c\u0438\u0440\u0430 98",
+    "status": "delivered",
+    "operator": [
+      "operator"
+    ],
+    "courier": [
+      "courier"
+    ]
+  }
+},
+{
+  "model": "webapp.order",
+  "pk": 5,
+  "fields": {
+    "contact_phone": "+9961548324",
+    "contact_name": "Jack",
+    "delivery_adress": "pr. Mira 97",
+    "status": "canceled",
+    "operator": [
+      "operator"
+    ],
+    "courier": [
+      "courier"
+    ]
+  }
+},
+{
+  "model": "webapp.orderfoods",
+  "pk": 4,
+  "fields": {
+    "order": 2,
+    "food": 1,
+    "amount": 1
+  }
+},
+{
+  "model": "webapp.orderfoods",
+  "pk": 5,
+  "fields": {
+    "order": 3,
+    "food": 1,
+    "amount": 4
+  }
+},
+{
+  "model": "webapp.orderfoods",
+  "pk": 7,
+  "fields": {
+    "order": 3,
+    "food": 1,
+    "amount": 3
+  }
+},
+{
+  "model": "webapp.orderfoods",
+  "pk": 9,
+  "fields": {
+    "order": 2,
+    "food": 1,
+    "amount": 5
+  }
+},
+{
+  "model": "webapp.orderfoods",
+  "pk": 10,
+  "fields": {
+    "order": 3,
+    "food": 5,
+    "amount": 4
+  }
+},
+{
+  "model": "webapp.orderfoods",
+  "pk": 11,
+  "fields": {
+    "order": 2,
+    "food": 5,
+    "amount": 5
+  }
+},
+{
+  "model": "webapp.orderfoods",
+  "pk": 12,
+  "fields": {
+    "order": 2,
+    "food": 5,
+    "amount": 1
+  }
+}
+]
