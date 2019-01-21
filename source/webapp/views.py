@@ -1,9 +1,9 @@
-from django.views.generic import DetailView, CreateView, ListView, UpdateView, View, DeleteView
+from django.views.generic import DetailView, CreateView, ListView, UpdateView, View, DeleteView, FormView
 from django.urls import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from webapp.models import Food, Order, OrderFoods, User
 from webapp.forms import FoodForm, OrderForm, OrderFoodForm, UpdateFoodForm, UpdateOrderForm
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
 
@@ -12,9 +12,67 @@ class OrderListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     template_name = 'order_list.html'
     permission_required = 'webapp.view_order'
 
-class OrderDetailList(LoginRequiredMixin, DetailView):
+class OrderDetailList(LoginRequiredMixin, DetailView, FormView):
     model = Order
     template_name = 'order_detail.html'
+    form_class = OrderFoodForm
+
+# Добавление блюд в заказ через Ajax запрос
+
+class OrderFoodAjaxCreateView(CreateView):
+    model = OrderFoods
+    form_class = OrderFoodForm
+
+    def form_valid(self, form):
+        order = get_object_or_404(Order, pk=self.kwargs.get('pk'))
+        form.instance.order = order
+        order_food = form.save()
+        return JsonResponse({
+            'food_name': order_food.food.name,
+            'food_pk': order_food.food.pk,
+            'amount': order_food.amount,
+            'pk': order_food.pk,
+            'edit_url': reverse('webapp:order_food_update', kwargs={'pk': order_food.pk}),
+            'delete_url': reverse('webapp:order_food_delete', kwargs={'pk': order_food.pk})
+        })
+
+
+    def form_invalid(self, form):
+        return JsonResponse({
+            'errors': form.errors
+        }, status='422')
+
+# Изменение блюд в заказе через Ajax запрос
+
+class OrderFoodAjaxUpdateView(UpdateView):
+    model = OrderFoods
+    form_class = OrderFoodForm
+
+    def form_valid(self, form):
+        order_food = form.save()
+        return JsonResponse({
+            'food_name': order_food.food.name,
+            'food_pk': order_food.food.pk,
+            'amount': order_food.amount,
+            'pk': order_food.pk,
+        })
+
+
+    def form_invalid(self, form):
+        return JsonResponse({
+            'errors': form.errors
+        }, status='422')
+
+# Удаление блюд из заказа через Alax запрос
+
+class OrderFoodAjaxDeleteView(DeleteView):
+    def get(self, request, *args, **kwargs):
+        orderfoods = OrderFoods.objects.get(pk=kwargs['pk'])
+        orderfoods.delete()
+
+        return JsonResponse({
+            'pk': kwargs['pk'],
+        })
 
 class OrderCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Order
@@ -80,7 +138,6 @@ class OrderFoodsDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteVi
     permission_required = 'webapp.edit_order_food'
 
 
-
 class OrderUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Order
     form_class = UpdateOrderForm
@@ -121,6 +178,7 @@ class OrderCancelView(LoginRequiredMixin, PermissionRequiredMixin, View):
         order.status = 'canceled'
         order.save()
         return redirect('webapp:order_detail', order.pk)
+
 
 
 
